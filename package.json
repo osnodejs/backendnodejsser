@@ -1,0 +1,35 @@
+{
+  "name": "backendnodejsser",
+  "version": "0.0.1",
+  "description": "backend node js server",
+  "main": "server.js",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "ejs": "^2.4.1",
+    "mocha": "^2.4.5",
+    "morgan": "^1.7.0",
+    "object-assign":"4.1.0",
+    "apn": "^2.2.0",
+    "express": "^4.16.3",
+    "mongodb": "^2.1.16",
+    "ws": "^5.2.0"
+  },
+  "engine": {
+    "node": "*",
+    "npm": "*"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osnodejs/backendnodejsser.git"
+  },
+  "author": "Steve Speicher <sspeiche@gmail.com>",
+  "license": "CC-BY-1.0",
+  "bugs": {
+    "url": "http://github.com/openshift/nodejs-ex/issues"
+  },
+  "homepage": "http://github.com/openshift/nodejs-ex"
+}
