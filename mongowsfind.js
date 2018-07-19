@@ -1,0 +1,113 @@
+var db_name = 'nodejspro';
+
+// new way 07-16-18
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
+mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
+mongoURLLabel = "";
+
+console.log('mongoURL 1: ', mongoURL);
+console.log('process.env.DATABASE_SERVICE_NAME: ', process.env.DATABASE_SERVICE_NAME);
+
+if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
+    console.log('inside if process.env.DATABASE_SERVICE_NAME: ', process.env.DATABASE_SERVICE_NAME);
+    var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
+    mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
+    mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'],
+    mongoDatabase = process.env[mongoServiceName + '_DATABASE'],
+    mongoPassword = process.env[mongoServiceName + '_PASSWORD']
+    mongoUser = process.env[mongoServiceName + '_USER'];
+    
+    if (mongoHost && mongoPort && mongoDatabase) {
+        mongoURLLabel = mongoURL = 'mongodb://';
+        if (mongoUser && mongoPassword) {
+            mongoURL += mongoUser + ':' + mongoPassword + '@';
+        }
+        // Provide UI label that excludes user id and pw
+        mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
+        mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
+        
+    }
+}
+console.log('mongoURL 2: ', mongoURL);
+//var myDb;
+
+
+// Use connect method to connect to the Server
+//MongoClient.connect(url, function (err, db) {
+MongoClient.connect(url, function (err, client) {
+  var db = client.db(db_name);
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    //HURRAY!! We are connected. :)
+    console.log('Connection established to', url);
+    // do some work here with the database.
+    // Get the documents collection
+    var usersCollection = db.collection('UsersInfoObject');
+    // var sysDataCollection = db.collection('SysUserData');  //SysDataCollection
+    var sysDataCollection = db.collection('SysDataCollection');  //SysDataCollection
+    // var collection = db.collection('');
+    //create user
+    var user1 = {name: 'admin', userid: 'adminid', deviceToken: '12345'};
+
+    // // db.close();
+    // // Insert some users
+    // collection.insert([user1], function (err, result) {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log('Inserted %d documents into the "users" collection. The documents inserted with "_id" are:', result.length, result);
+    //   }
+    //   //Close connection
+    //   db.close();
+    // });
+
+    // sysDataCollection.find().toArray(function (err, result) {
+    //   if (err) {
+    //     console.log(err);
+    //   } else if (result.length) {
+    //     console.log('sysDataCollection Found:', result);
+    //   } else {
+    //     console.log('No sysDataCollection found with defined "find" criteria!');
+    //   }
+    //   //Close connection
+    //   // db.close();
+    // });
+
+    usersCollection.find().toArray(function (err, result) {
+      if (err) {
+        console.log(err);
+      } else if (result.length) {
+
+        console.log('usersCollection Found:', result);
+      } else {
+        console.log('No usersCollection found with defined "find" criteria!');
+      }
+      //Close connection
+//      db.close();
+           client.close();
+    });
+
+    // // db.listCollections(function (err, collections) {
+    // db.collections(function (err, result) {
+    //
+    //   if (err) {
+    //     console.log(err);
+    //   } else if (result.length) {
+    //     console.log('db.colledtions Found:', result);
+    //   } else {
+    //     console.log('No document(s) found with defined "db.collections" criteria!');
+    //   }
+    //   db.close();
+    // })
+
+
+//remove all documents - records from collection or table
+    // collection.remove({}, function(err, numberRemoved){
+    //   console.log("inside remove call back " + numberRemoved);
+    //   db.close();
+    // })
+
+  }
+});
