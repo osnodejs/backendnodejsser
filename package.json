@@ -6,6 +6,7 @@
   "author": "me David",
   "license": "ISC",
   "dependencies": {
+      "twilio": "^3.18.0",
     "apn": "^2.2.0",
     "express": "^4.16.3",
     "mongodb": "^3.1.1",
