@@ -50,13 +50,13 @@ console.log('mongoPassword: ', mongoPassword);
 console.log('mongoUser: ', mongoUser);
 console.log('mongoURLLabel: ', mongoURLLabel);
 
-MongoClient.connect(url, function (err, client) {
+MongoClient.connect(mongoURL, function (err, client) {
   var db = client.db(db_name);
   if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
     //HURRAY!! We are connected. :)
-    console.log('Connection established to', url);
+    console.log('Connection established to', mongoURL);
     // do some work here with the database.
     // Get the documents collection
     var usersCollection = db.collection('UsersInfoObject');
