@@ -32,9 +32,24 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
 console.log('mongoURL 2: ', mongoURL);
 //var myDb;
 
+var db = null;
 
-// Use connect method to connect to the Server
-//MongoClient.connect(url, function (err, db) {
+if (mongoURL == null) return;
+
+var mongodb = require('mongodb');
+if (mongodb == null) return;
+var MongoClient = mongodb.MongoClient;
+
+console.log('mongodb version: ', require("mongodb/package").version);
+console.log('mongoURL 2: ', mongoURL);
+console.log('mongoServiceName: ', mongoServiceName);
+console.log('mongoHost: ', mongoHost);
+console.log('mongoPort: ', mongoPort);
+console.log('mongoDatabase: ', mongoDatabase);
+console.log('mongoPassword: ', mongoPassword);
+console.log('mongoUser: ', mongoUser);
+console.log('mongoURLLabel: ', mongoURLLabel);
+
 MongoClient.connect(url, function (err, client) {
   var db = client.db(db_name);
   if (err) {
